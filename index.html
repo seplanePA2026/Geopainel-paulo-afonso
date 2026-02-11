@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Panorama Municipal • Paulo Afonso </title>
+  <title>Panorama Municipal • Paulo Afonso</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,7 +131,7 @@
       align-items:center;
       justify-content:space-between;
       padding:12px 14px;
-      border-bottom:1px solid var(--line);      
+      border-bottom:1px solid var(--line);
       gap:10px;
       flex: 0 0 auto;
     }
@@ -424,48 +424,112 @@
       padding:10px;
       height: 210px;
     }
+    
     .bars{
       height:100%;
       display:flex;
-      gap:10px;
-      align-items:stretch;
+      gap:16px;
+      align-items:flex-end;
+      justify-content:center;
+      overflow-x:auto;
+      padding-bottom:6px;
     }
-    .barWrap{height:100%;
-      flex:1;
-      min-width: 34px;
+    .barWrap{
+      /* auto height so labels never clip in normal window */
+      flex:0 0 74px;
+      max-width:74px;
       display:flex;
       flex-direction:column;
+      align-items:center;
       justify-content:flex-end;
-      gap:6px;
+      gap:4px;
+      padding-bottom:2px;
+    }
+    .barCol{
+      height:132px;
+      width:100%;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
     }
     .bar{
-      width:100%;
-      border-radius:10px 10px 10px 10px;
-      background: rgba(11,58,131,.35);
-      border:1px solid rgba(11,58,131,.15);
+      width:54px;           /* torre mais fina */
+      border-radius:14px;
+      background: linear-gradient(180deg, var(--blue2), var(--blue));
+      border:1px solid rgba(11,58,131,.38);
       height: 10%;
       transition: height .22s ease;
     }
-    .bar.blue{ background: rgba(11,58,131,.55); border-color: rgba(11,58,131,.22); }
-    .bar.orange{ background: rgba(255,138,42,.58); border-color: rgba(255,138,42,.25); }
+    .bar.blue{
+      background: linear-gradient(180deg, var(--blue2), var(--blue));
+      border-color: rgba(11,58,131,.38);
+    }
+    .bar.orange{
+      background: linear-gradient(180deg, var(--orange2), var(--orange));
+      border-color: rgba(255,138,42,.45);
+    }
     .barLabel{
       font-size:11px;
       font-weight:900;
       color: var(--blue2);
-      white-space:nowrap;
+      text-align:center;
+      width:100%;
+      white-space:normal;
+      line-height:1.1;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
       overflow:hidden;
-      text-overflow:ellipsis;
     }
     .barVal{
       font-size:11px;
-      font-weight:800;
+      font-weight:900;
       color: var(--muted);
+      text-align:center;
+      width:100%;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
 
-    /* Tooltip (gráficos) */
+
+    /* Line chart (Comparação por ano) */
+    .lineChartWrap{
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .lineSvg{
+      width:100%;
+      flex:1;
+      display:block;
+    }
+    .lineAxisText{
+      font-size:11px;
+      font-weight:900;
+      fill: rgba(11,58,131,.72);
+    }
+    .linePoint{ cursor:default; }
+    .lineLabels{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:0 6px 2px;
+      overflow-x:auto;
+    }
+    .lineLabels::-webkit-scrollbar{height:8px}
+    .lineLabels::-webkit-scrollbar-thumb{background:#cfe0ff;border-radius:999px}
+    .lineLbl{
+      flex:0 0 auto;
+      min-width:54px;
+      text-align:center;
+      line-height:1.1;
+    }
+    .lineLbl .y{ font-size:11px; font-weight:900; color:var(--blue2); }
+    .lineLbl .v{ font-size:11px; font-weight:900; color:var(--muted); }
+
+/* Tooltip (gráficos) */
     .chartTooltip{
       position:fixed;
       z-index:9999;
@@ -484,19 +548,9 @@
     .chartTooltip .tTitle{ font-size:12px; font-weight:1000; color: var(--blue2); }
     .chartTooltip .tVal{ margin-top:2px; font-size:12px; font-weight:850; color: var(--muted); }
 
-    /* Compare (5 cidades): mostrar só o nome embaixo, valor via tooltip */
-    .compareRegion .barWrap{ align-items:center; }
-    .compareRegion .barLabel{
-      text-align:center;
-      white-space:normal;
-      line-height:1.1;
-      display:-webkit-box;
-      -webkit-line-clamp:2;
-      -webkit-box-orient:vertical;
-      overflow:hidden;
-      max-width: 92px;
-    }
-    .compareRegion .barVal{ display:none; }
+    /* Compare (5 cidades): mostrar nome + valor embaixo */
+    .compareRegion .barLabel{ max-width: 92px; }
+    .compareRegion .barVal{ display:block; color: var(--blue2); font-weight:900; opacity:.92; }
 
     /* Drawer: usar o título no topo (e esconder o subtítulo) */
     #drawerTitle{ display:none; }
@@ -821,7 +875,7 @@
             <div class="mapTools">
               <button class="toolBtn" id="btnToggleMap" title="Compactar mapa" aria-label="Compactar mapa"></button>
             </div>
-            <iframe class="mapFrame" id="mapFrame" src="./Seplane_Interface_Atualizado/Mapa_Populacional/index.html"></iframe>
+            <iframe class="mapFrame" id="mapFrame" src="./Seplane_Interface_Atualizado/Mapa_Populacional/index.html?v=1"></iframe>
 
             <div class="mapSidePanel" id="mapSidePanel">
               <div class="mapSideHead">
@@ -1846,24 +1900,58 @@ function renderTrendChart(){
     return;
   }
 
-  const numericVals = series.map(p => (typeof p.value === "number" ? p.value : toNumber(p.value) ?? 0));
-  const max = Math.max(...numericVals);
-  const safeMax = (Number.isFinite(max) && max !== 0) ? max : 1;
+  
+  // sort years ascending if possible
+  series.sort((a,b)=>{
+    const na = Number(a.label), nb = Number(b.label);
+    if(Number.isFinite(na) && Number.isFinite(nb)) return na-nb;
+    return String(a.label).localeCompare(String(b.label));
+  });
+
+  const nums = series.map(p => (typeof p.value === "number" ? p.value : (toNumber(p.value) ?? 0)));
+  const min = Math.min(...nums);
+  const max = Math.max(...nums);
+  const range = (Number.isFinite(max - min) && (max - min) !== 0) ? (max - min) : 1;
+
+  // SVG sizing
+  const W = 420, H = 170;
+  const padL = 40, padR = 14, padT = 16, padB = 28;
+  const iw = W - padL - padR;
+  const ih = H - padT - padB;
+
+  const pts = series.map((p,i)=>{
+    const v = (typeof p.value === "number") ? p.value : (toNumber(p.value) ?? 0);
+    const x = padL + (iw * (series.length === 1 ? 0.5 : (i / (series.length - 1))));
+    const y = padT + ih * (1 - ((v - min) / range));
+    return { x, y, label: p.label, value: p.value };
+  });
+
+  const poly = pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
 
   box.innerHTML = `
-    <div class="bars">
-      ${series.map(p => {
-        const v = (typeof p.value === "number") ? p.value : (toNumber(p.value) ?? 0);
-        const h = Number.isFinite(v) ? Math.max(6, Math.round((v / safeMax) * 100)) : 6;
-        const isSel = String(p.label) === String(state.selectedYear);
-        return `
-          <div class="barWrap" data-tip-title="${escapeHtml(p.label)}" data-tip-value="${escapeHtml(fmtValue(p.value))}">
-            <div class="bar blue ${isSel ? "sel" : ""}" style="height:${h}%"></div>
-            <div class="barLabel">${escapeHtml(p.label)}</div>
-            <div class="barVal">${escapeHtml(fmtValue(p.value))}</div>
+    <div class="lineChartWrap">
+      <svg class="lineSvg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+        <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT+ih}" stroke="rgba(11,58,131,.25)" stroke-width="2"/>
+        <line x1="${padL}" y1="${padT+ih}" x2="${padL+iw}" y2="${padT+ih}" stroke="rgba(11,58,131,.25)" stroke-width="2"/>
+
+        <text class="lineAxisText" x="8" y="${padT+12}">${escapeHtml(fmtValue(max))}</text>
+        <text class="lineAxisText" x="8" y="${padT+ih}">${escapeHtml(fmtValue(min))}</text>
+
+        <polyline points="${poly}" fill="none" stroke="var(--blue2)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        ${pts.map(p => `
+          <circle class="linePoint" cx="${p.x}" cy="${p.y}" r="6" fill="var(--blue2)" stroke="white" stroke-width="2"
+            data-tip-title="${escapeHtml(p.label)}" data-tip-value="${escapeHtml(fmtValue(p.value))}"></circle>
+        `).join("")}
+      </svg>
+
+      <div class="lineLabels">
+        ${series.map(p => `
+          <div class="lineLbl">
+            <div class="y">${escapeHtml(p.label)}</div>
+            <div class="v">${escapeHtml(fmtValue(p.value))}</div>
           </div>
-        `;
-      }).join("")}
+        `).join("")}
+      </div>
     </div>
   `;
 }
@@ -1984,7 +2072,7 @@ function renderCompareChart(){
         const cls = (p.color === "blue") ? "blue" : "orange";
         return `
           <div class="barWrap" data-tip-title="${escapeHtml(p.label)}" data-tip-value="${escapeHtml(fmtValue(p.value))}">
-            <div class="bar ${cls}" style="height:${h}%"></div>
+            <div class="barCol"><div class="bar ${cls}" style="height:${h}%"></div></div>
             <div class="barLabel">${escapeHtml(p.label)}</div>
             <div class="barVal">${escapeHtml(fmtValue(p.value))}</div>
           </div>
@@ -2123,7 +2211,7 @@ function __tipHide(){
 
 // Event delegation (bars are re-rendered often)
 document.addEventListener("pointerover", (e) => {
-  const wrap = e.target?.closest?.(".barWrap, .pieItem");
+  const wrap = e.target?.closest?.(".barWrap, .pieItem, .linePoint");
   if(!wrap) return;
   const tt = wrap.getAttribute("data-tip-title") || "";
   const tv = wrap.getAttribute("data-tip-value") || "";
@@ -2141,7 +2229,7 @@ document.addEventListener("pointermove", (e) => {
 });
 
 document.addEventListener("pointerout", (e) => {
-  const wrap = e.target?.closest?.(".barWrap, .pieItem");
+  const wrap = e.target?.closest?.(".barWrap, .pieItem, .linePoint");
   if(!wrap || wrap !== __tipActive) return;
   const rel = e.relatedTarget;
   if(rel && wrap.contains(rel)) return; // still inside
@@ -2437,6 +2525,7 @@ if(typeof XLSX === "undefined"){
     loadWorkbookFromUrl();
   });
 }
+
 
 
 </script>
